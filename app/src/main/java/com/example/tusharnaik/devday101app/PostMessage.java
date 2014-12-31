@@ -1,16 +1,12 @@
 package com.example.tusharnaik.devday101app;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,14 +17,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
-import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -55,7 +45,7 @@ public class PostMessage extends Activity {
             public void onClick(View view) {
                 final String authorName = name.getText().toString();
                 final String authorId = id.getText().toString();
-                String postMessage = message[0].getText().toString();
+                final String postMessage = message[0].getText().toString();
 
                 final boolean[] success = new boolean[1];
                 Thread thread = new Thread(new Runnable() {
@@ -68,14 +58,15 @@ public class PostMessage extends Activity {
                             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
                             pairs.add(new BasicNameValuePair("Id", authorId));
                             pairs.add(new BasicNameValuePair("Name", authorName));
+                            pairs.add(new BasicNameValuePair("Message", postMessage));
                             httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 
                             DefaultHttpClient httpClient = new DefaultHttpClient();
 
                             HttpResponse response = httpClient.execute(httpPost);
-                            HttpEntity entity1 = response.getEntity();
+                            HttpEntity entity = response.getEntity();
 
-                            if (entity1 != null && (response.getStatusLine().getStatusCode() == 201 || response.getStatusLine().getStatusCode() == 200)) {
+                            if (entity != null && (response.getStatusLine().getStatusCode() == 201 || response.getStatusLine().getStatusCode() == 200)) {
                                 success[0] = true;
                             } else {
                                 success[0] = false;
@@ -98,12 +89,12 @@ public class PostMessage extends Activity {
                 if(success[0]){
                     Toast toast = Toast.makeText(PostMessage.this, "Succussfully posted", Toast.LENGTH_SHORT);
                     toast.show();
-                    finishActivity(0);
+                    finish();
                 }
                 else{
                     Toast toast = Toast.makeText(PostMessage.this, "Error hitting the endpoint: status", Toast.LENGTH_SHORT);
                     toast.show();
-                    finishActivity(1);
+                    finish();
 
                 }
             }

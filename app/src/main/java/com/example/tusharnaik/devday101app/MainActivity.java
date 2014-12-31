@@ -9,20 +9,15 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,9 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -48,8 +41,9 @@ public class MainActivity extends FragmentActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button refresh = (Button) findViewById(R.id.buttonRefresh);
         final ListView listView = (ListView) findViewById(R.id.listView);
+        reloadList(listView);
+        Button refresh = (Button) findViewById(R.id.buttonRefresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +63,7 @@ public class MainActivity extends FragmentActivity {
 
     private void reloadList(final ListView listView) {
 
-
         final ArrayList<String> list = new ArrayList<String>();
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -94,7 +86,7 @@ public class MainActivity extends FragmentActivity {
                         String name = jsonObject.get("Name").toString();
                         String posts = jsonObject.get("Posts").toString();
                         String id = jsonObject.get("Id").toString();
-                        String messageItem = id + ": " + name + "  " + posts;
+                        String messageItem = id + ": " + name + " says \"  " + posts + "\"";
                         list.add(messageItem);
                     }
                     System.out.println("list = " + list);
@@ -114,13 +106,6 @@ public class MainActivity extends FragmentActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("list = " + list);
-//        String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//                "Android", "iPhone", "WindowsMobile"};
-
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
