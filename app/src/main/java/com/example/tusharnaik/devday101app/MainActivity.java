@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity {
                         String name = jsonObject.get("Name").toString();
                         String posts = jsonObject.get("Posts").toString();
                         String id = jsonObject.get("Id").toString();
-                        String messageItem = id + ": " + name + " says \"  " + posts + "\"";
+                        String messageItem = id + ": " + name + " says \"" + posts + "\"";
                         list.add(messageItem);
                     }
                     System.out.println("list = " + list);
