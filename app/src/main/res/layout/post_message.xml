@@ -26,8 +26,7 @@
         android:layout_marginTop="70dp"
         android:ems="10"
         android:hint="Name"
-        android:inputType="textPersonName"
-        android:typeface="monospace" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editTextId"
@@ -36,8 +35,7 @@
         android:layout_below="@+id/editTextName"
         android:layout_centerHorizontal="true"
         android:hint="Id"
-        android:inputType="number"
-        android:typeface="monospace" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/editTextMessage"
@@ -47,8 +45,7 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="Message"
-        android:inputType="textMultiLine"
-        android:typeface="monospace" />
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/buttonPost"
@@ -60,7 +57,6 @@
         android:background="#85007d95"
         android:text="POST"
         android:textColor="#FFFFFFFF"
-        android:textStyle="bold"
-        android:typeface="monospace" />
+        android:textStyle="bold" />
 
 </RelativeLayout>
