@@ -52,12 +52,12 @@ public class PostMessage extends Activity {
                     @Override
                     public void run() {
 
-                        String url = "http://webapp101.azurewebsites.net/Home/CreateAuthor";
+                        String url = "http://webapp101.azurewebsites.net/Home/CreatePost";
                         HttpPost httpPost = new HttpPost(url);
                         try {
                             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
                             pairs.add(new BasicNameValuePair("Id", authorId));
-                            pairs.add(new BasicNameValuePair("Name", authorName));
+                            pairs.add(new BasicNameValuePair("Title", authorName));
                             pairs.add(new BasicNameValuePair("Message", postMessage));
                             httpPost.setEntity(new UrlEncodedFormEntity(pairs));
 

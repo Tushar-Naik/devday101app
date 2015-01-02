@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void run() {
                 HttpClient client = new DefaultHttpClient();
-                String URL = "http://webapi101.azurewebsites.net/Api/Authors";
+                String URL = "http://webapi101.azurewebsites.net/api/messages";
                 try {
                     HttpGet httpget = new HttpGet(URL);
                     HttpResponse response = client.execute(httpget);
@@ -85,10 +85,14 @@ public class MainActivity extends FragmentActivity {
                     for (int i = 0; i < finalResult.length(); i++) {
                         JSONObject jsonObject = finalResult.getJSONObject(i);
                         System.out.println("jsonObject = " + jsonObject);
-                        String name = jsonObject.get("Name").toString();
-                        String posts = jsonObject.get("Posts").toString();
+                        String title = jsonObject.get("Title").toString();
+                        String message = jsonObject.get("Message").toString();
+                        //JSONObject author = (JSONObject) jsonObject.get("Author");
+                        //String authorName= author.get("Name").toString();
+                        String createdAt = jsonObject.get("CreatedAt").toString();
+                        //String posts = jsonObject.get("Posts").toString();
                         String id = jsonObject.get("Id").toString();
-                        String messageItem = id + ": " + name + " says \"" + posts + "\"";
+                        String messageItem = createdAt  + "\n " + title + " \n " + message + "";
                         list.add(messageItem);
                     }
                     System.out.println("list = " + list);
@@ -99,7 +103,6 @@ public class MainActivity extends FragmentActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
         thread.start();
